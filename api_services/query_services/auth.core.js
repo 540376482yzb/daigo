@@ -1,11 +1,27 @@
-import fireBase from "../firebase";
+import fireBase from "../firebase"
 
 export default class Auth {
-    static signUpWithEmail(email,password) {
-         fireBase.auth.createUserWithEmailAndPassword(email,password)
-    }
+	static async signUpWithEmail(email, password) {
+		try {
+			return await fireBase.auth.createUserWithEmailAndPassword(email, password)
+		} catch (error) {
+			throw error
+		}
+	}
 
-    static signInWithEmail(email,password) {
-        fireBase.auth.signInWithEmailAndPassword(email,password)
-    }
+	static async signInWithEmail(email, password) {
+		try {
+			return await fireBase.auth.signInWithEmailAndPassword(email, password)
+		} catch (error) {
+			throw error
+		}
+	}
+
+	static async signOut() {
+		try {
+			return await fireBase.auth.signOut()
+		} catch (error) {
+			throw error
+		}
+	}
 }
