@@ -23,6 +23,7 @@ function Main({ children, history, location: { pathname } }) {
 					<Footer>
 						<FooterTab>
 							<Button
+								style={{ backgroundColor: "#2d3561" }}
 								active={pathname === "/orders"}
 								onPress={() => history.push("/orders")}>
 								<Icon name="list" />
@@ -30,6 +31,7 @@ function Main({ children, history, location: { pathname } }) {
 						</FooterTab>
 						<FooterTab>
 							<Button
+								style={{ backgroundColor: "#2d3561" }}
 								active={pathname === "/products"}
 								onPress={() => history.push("/products")}>
 								<Icon type="AntDesign" name="tagso" />
@@ -37,6 +39,7 @@ function Main({ children, history, location: { pathname } }) {
 						</FooterTab>
 						<FooterTab>
 							<Button
+								style={{ backgroundColor: "#2d3561" }}
 								active={pathname === "/contacts"}
 								onPress={() => history.push("/contacts")}>
 								<Icon name="contacts" />
@@ -44,6 +47,7 @@ function Main({ children, history, location: { pathname } }) {
 						</FooterTab>
 						<FooterTab>
 							<Button
+								style={{ backgroundColor: "#2d3561" }}
 								active={pathname === "/setting"}
 								onPress={() => history.push("/setting")}>
 								<Icon type="AntDesign" name="setting" />

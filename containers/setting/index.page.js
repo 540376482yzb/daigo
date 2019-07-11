@@ -17,9 +17,9 @@ import {
 import { signOut } from "../../redux/actions/auth.action"
 
 function Setting({ signOut }) {
-	useEffect(() => {
-		signOut()
-	})
+	// useEffect(() => {
+	// 	signOut()
+	// })
 	return (
 		<Container>
 			<Header>

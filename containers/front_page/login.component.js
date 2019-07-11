@@ -8,7 +8,7 @@ const LoginComponent = ({ handleLogin, loading, error }) => {
 	const [password, setPassword] = useState("")
 
 	return (
-		<Form>
+		<Form style={styles.formContainer}>
 			<View style={styles.headerContent}>
 				<Icon type="AntDesign" name="login" style={styles.headerIcon} />
 			</View>
@@ -46,6 +46,7 @@ const LoginComponent = ({ handleLogin, loading, error }) => {
 }
 
 const styles = StyleSheet.create({
+	formContainer: { flex: 1, minHeight: 400 },
 	headerContent: {
 		padding: 10,
 		justifyContent: "center",

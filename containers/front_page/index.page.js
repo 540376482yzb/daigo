@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { StyleSheet, View, KeyboardAvoidingView } from "react-native"
+import { StyleSheet, View } from "react-native"
 import { connect } from "react-redux"
 import {
 	Container,
@@ -45,7 +45,7 @@ function FrontPage({ signUp, signIn, loading, error }) {
 					<Icon type="Feather" name="shopping-bag" style={styles.headerIcon} />
 				</Body>
 			</Header>
-			<KeyboardAvoidingView>
+			<Content style={styles.content}>
 				<Tabs tabBarPosition="bottom" style={styles.tabsStyle}>
 					<Tab
 						heading="Sign in"
@@ -60,7 +60,7 @@ function FrontPage({ signUp, signIn, loading, error }) {
 						<RegisterComponent handleRegister={signUp} />
 					</Tab>
 				</Tabs>
-			</KeyboardAvoidingView>
+			</Content>
 		</Container>
 	)
 }
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
 		fontSize: 70,
 		color: "white"
 	},
-
+	content: { padding: 20 },
 	tabsStyle: {
 		borderRadius: 10,
 		overflow: "hidden"
