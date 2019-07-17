@@ -3,13 +3,13 @@ import '@firebase/firestore'
 import '@firebase/auth'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAm67hmZGsJ0BIk4uNFecUkLqp7Pm9IufA",
-  authDomain: "daigou-18824.firebaseapp.com",
-  databaseURL: "https://daigou-18824.firebaseio.com",
-  projectId: "daigou-18824",
-  storageBucket: "daigou-18824.appspot.com",
-  messagingSenderId: "280418903977",
-  appId: "1:280418903977:web:1f266732a0e98ac4"
+  apiKey: "AIzaSyA5Ly0ehcy5_CVBlcTrKI_rW7ND7FjIpXw",
+  authDomain: "daigo2-9a0da.firebaseapp.com",
+  databaseURL: "https://daigo2-9a0da.firebaseio.com",
+  projectId: "daigo2-9a0da",
+  storageBucket: "",
+  messagingSenderId: "362433399689",
+  appId: "1:362433399689:web:d48b018b0dc3de55"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -18,5 +18,5 @@ const dataBase = firebase.firestore();
 const auth = firebase.auth()
 
 export default {
-  dataBase,auth
+  dataBase, auth
 };

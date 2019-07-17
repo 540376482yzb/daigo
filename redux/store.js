@@ -1,14 +1,17 @@
 import { createStore, applyMiddleware, combineReducers } from "redux"
 import thunk from "redux-thunk"
-import { createLogger } from "redux-logger"
 import { AsyncStorage } from "react-native"
 import authReducer from "./reducers/auth.reducer"
+import globalReducer from './reducers/utility.reducer'
+import productReducer from './reducers/product.reducer'
+import customerReducer from './reducers/customer.reducer'
+import categoryReducer from './reducers/category.reducer'
+
 
 const rootReducer = combineReducers({
-	authReducer
+	authReducer, globalReducer, productReducer, customerReducer, categoryReducer
 })
 
-const logger = createLogger()
 
 const loadState = () => {
 	try {
@@ -32,7 +35,7 @@ const saveState = async state => {
 const store = createStore(
 	rootReducer,
 	loadState(),
-	applyMiddleware(thunk, logger)
+	applyMiddleware(thunk)
 )
 
 store.subscribe(() => {

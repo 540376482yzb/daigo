@@ -25,6 +25,25 @@ class Product extends Basic {
       throw err;
     }
   }
+
+  static async createProduct(options) {
+    const { name, price, product_category, scan_id, stock, weight } = options;
+    if (!name) throw new Error('Name is Missing')
+    if (!price) throw new Error('price is Missing')
+    if (!product_category) throw new Error('product_category is Missing')
+    if (!scan_id) throw new Error('scan_id is Missing')
+    if (!stock) throw new Error('stock is Missing')
+    if (!weight) throw new Error('weight is Missing')
+
+    try {
+      return await Product.createDocWithOptions("product", {
+        name, price, product_category, scan_id, stock, weight
+      })
+    } catch (err) {
+      throw err;
+    }
+  }
+
 }
 
 export default Product;

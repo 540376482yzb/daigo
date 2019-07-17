@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
 import { StyleSheet, View } from "react-native"
 import { connect } from "react-redux"
 import {
 	Container,
 	Header,
 	Body,
-	Title,
 	Tabs,
 	Tab,
 	Icon,

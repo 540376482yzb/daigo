@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react"
 import FireBase from "../api_services/firebase"
-import { View } from "react-native"
+import { View, ActivityIndicator, StyleSheet } from "react-native"
 import { withRouter } from "react-router-native"
-import { Root, Container, Footer, FooterTab, Button, Icon } from "native-base"
-import IconButton from "./buttons/IconButton.component"
+import { connect } from 'react-redux'
+import { Root, Container, Footer, FooterTab, Button, Icon, Toast } from "native-base"
 
-function Main({ children, history, location: { pathname } }) {
+function Main({ loading, error, children, history, location: { pathname } }) {
 	useEffect(() => {
 		FireBase.auth.onAuthStateChanged(user => {
 			if (user) {
@@ -15,11 +15,27 @@ function Main({ children, history, location: { pathname } }) {
 			}
 		})
 	}, [])
+
+	useEffect(() => {
+		error && Toast.show({
+			text: error,
+			type: 'danger',
+			duration: 1
+		}, 3000)
+
+	}, [error])
+
+	const shouldShowFooter = (pathname) => {
+		const pathList = ["orders", "contacts", "setting", "products"]
+		return pathList.find(path => pathname.includes(path))
+	}
+
 	return (
 		<Root>
 			<Container>
+				{loading && <View style={styles.spinner}><ActivityIndicator /></View>}
 				{children}
-				{pathname !== "/" && (
+				{!!shouldShowFooter(pathname) && (
 					<Footer>
 						<FooterTab>
 							<Button
@@ -60,4 +76,23 @@ function Main({ children, history, location: { pathname } }) {
 	)
 }
 
-export default withRouter(Main)
+const mapStateToProps = state => {
+	return {
+		loading: state.globalReducer.loading,
+		error: state.globalReducer.error
+	}
+}
+export default connect(mapStateToProps)(withRouter(Main))
+
+const styles = StyleSheet.create({
+	spinner: {
+		zIndex: 999,
+		position: "absolute",
+		top: 0,
+		bottom: 0,
+		left: 0,
+		right: 0,
+		justifyContent: "center",
+		alignItems: "center"
+	},
+})

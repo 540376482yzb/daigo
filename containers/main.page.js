@@ -5,7 +5,7 @@ import Main from "../shared_components/main.component"
 import FrontPage from "./front_page/index.page"
 import OrderPage from "./orders/index.page"
 import ProductPage from "./products/index.page"
-import ContactPage from "./contacts/index.page"
+import { CustomerDetail, CustomerList } from "./contacts/index.page"
 import SettingPage from "./setting/index.page"
 
 function MainApp() {
@@ -16,7 +16,8 @@ function MainApp() {
 					<Route exact path="/" component={FrontPage} />
 					<Route exact path="/orders" component={OrderPage} />
 					<Route exact path="/products" component={ProductPage} />
-					<Route exact path="/contacts" component={ContactPage} />
+					<Route exact path="/contacts" component={CustomerList} />
+					<Route exact path="/contact/detail/:customer_id" component={CustomerDetail} />
 					<Route exact path="/setting" component={SettingPage} />
 				</Switch>
 			</Main>

@@ -6,14 +6,9 @@ import {
 	Content,
 	Header,
 	Body,
-	Right,
 	Title,
 	Spinner,
-	Toast,
-	Button,
-	Icon
 } from "native-base"
-import IconButton from "../../shared_components/buttons/IconButton.component"
 
 function Order() {
 	return (

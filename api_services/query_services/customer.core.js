@@ -1,5 +1,5 @@
 import Basic from "./basic.core";
-import Order from "./customer.core";
+import Order from "./order.core";
 
 class Customer extends Basic {
   constructor(customer_id) {
@@ -40,19 +40,19 @@ class Customer extends Basic {
   }
 
   static async createCustomer(options) {
-    const { id, name, address, cell } = options;
-    if (!id) throw new Error("Missing ID");
+    const { identification, name, address, phone } = options;
+    if (!identification) throw new Error("Missing ID");
     if (!name) throw new Error("Missing Name");
     if (!address) throw new Error("Missing Address");
-    if (!cell) throw new Error("Missing Cell");
+    if (!phone) throw new Error("Missing Cell");
     try {
       return await Customer.createDocWithOptions("customer", {
-        id,
+        identification,
         name,
         address,
-        cell,
+        phone,
         orders: []
-      });
+      })
     } catch (err) {
       throw err;
     }
@@ -62,6 +62,7 @@ class Customer extends Basic {
     try {
       return await Customer.queryListShallow("customer");
     } catch (err) {
+      consoel.log(err)
       throw err;
     }
   }

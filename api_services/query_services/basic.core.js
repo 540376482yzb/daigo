@@ -1,4 +1,6 @@
-import fireBase from "../firebase";
+import moment from 'moment'
+import fireBase from '../firebase.js'
+// import console = require('console');
 
 class Basic {
   constructor(collection, doc_id) {
@@ -7,21 +9,19 @@ class Basic {
   }
 
   /**
-   * @return {promise} firebase promise
+   * @return {promise} fireBase promise
    */
   async getDocDetailWithId() {
     if (!this.collection) throw new Error("NO COLLECTION NAME FOUND");
     if (!this.doc_id) throw new Error("NO DOC_ID FOUND");
-
-    try {
-      return fireBase.dataBase
-        .collection(this.collection)
-        .doc(this.doc_id)
-        .get()
-        .then(doc => ({ _id: doc.id, ...doc.data() }));
-    } catch (err) {
-      throw err;
-    }
+    const user_token = fireBase.auth.currentUser ? fireBase.auth.currentUser.uid : ''
+    return fireBase.dataBase
+      .collection(this.collection)
+      .where('user_token', '==', user_token)
+      .doc(this.doc_id)
+      .get()
+      .then(doc => ({ _id: doc.id, ...doc.data() }))
+      .catch(err => { throw err })
   }
 
   /**
@@ -30,46 +30,74 @@ class Basic {
    */
   async modifyDoc(options) {
     if (!options) throw new Error("Missing options");
-    const { user_token } = options;
-    //TODO: check user_token
+    const user_token = fireBase.auth.currentUser ? fireBase.auth.currentUser.uid : ''
     const docDetail = await this.getDocDetailWithId();
     if (!docDetail) throw new Error("No Doc is found");
     return fireBase.dataBase
       .collection(this.collection)
       .doc(this.doc_id)
-      .update(options);
+      .where('user_token', '==', user_token)
+      .update({ ...options })
+      .catch(err => { throw err })
+  }
+
+  /**
+   * 
+   * @param {string} doc_id document id  
+   */
+  async deleteDoc() {
+    const user_token = fireBase.auth.currentUser ? fireBase.auth.currentUser.uid : ''
+    if (!doc_id) throw new Error('Missing Doc Id')
+    return fireBase.dataBase
+      .collection(this.collection)
+      .doc(this.doc_id)
+      .where('user_token', '==', user_token)
+      .update({ status: 0 })
+      .catch(err => {
+        throw err;
+      })
   }
 
   /**
    * query for shallow relational tables
-   * @param {string} collection_name - firebase collection name
+   * @param {string} collection_name - fireBase collection name
    * @return {Promise} array of list
    */
-  static async queryListShallow(collection_name) {
+  static async queryListShallow(collection_name, sort_direction) {
     if (!collection_name) throw new Error("NO COLLECTION NAME FOUND");
-    return fireBase.dataBase
+    const user_token = fireBase.auth.currentUser ? fireBase.auth.currentUser.uid : ''
+    return await fireBase.dataBase
       .collection(collection_name)
+      .where('status', '==', 1)
+      .where('user_token', '==', user_token)
       .get()
       .then(querySnapShot => {
         const shallowList = [];
         querySnapShot.forEach(doc => {
-          const docDetail = { _id: doc.id, ...doc.data() };
-          shallowList.push(docDetail);
+          shallowList.push({ _id: doc.id, ...doc.data() });
         });
-        return shallowList;
-      });
+        return shallowList
+      })
+      .catch(error => {
+        throw error;
+      })
+
   }
 
   /**
    *
    * @param {*} collection_name
    * @param {*} options
-   * @return {Promise} firebase promise
+   * @return {Promise} fireBase promise
    */
   static async createDocWithOptions(collection_name, options) {
+    const user_token = fireBase.auth.currentUser ? fireBase.auth.currentUser.uid : ''
     return await fireBase.dataBase
       .collection(collection_name)
-      .add({ ...options, user_token: "1234" });
+      .add({ ...options, user_token, create_at: moment.utc().format(), status: 1 })
+      .catch(err => {
+        throw err;
+      })
   }
 }
 

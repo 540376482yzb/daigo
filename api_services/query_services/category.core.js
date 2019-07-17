@@ -9,6 +9,10 @@ class Category extends Basic {
   async getCategoryWithId() {
     return await this.getDocDetailWithId();
   }
+
+  static async getCatergoryList() {
+    return await Category.queryListShallow('category')
+  }
 }
 
 export default Category;
